@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Danh mục</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+
+    <!--navbar-->
+    <div th:replace="fragments/navigation :: navbar"/>
+    <!--navbar-end-->
+
+    <h2 style="color:red;" th:text="${message}"/>
+    <h2>Danh mục</h2>
+    <a th:href="@{/category/edit}" class="btn btn-primary">Thêm mới</a>
+    <form method="get" th:action="@{/searchCategory}">
+        <input type="text" name="categoryName" placeholder="Nhập tên danh mục" th:value="${param.categoryName}" required/>
+        <button type="submit" class="btn btn-primary" >Tìm kiếm</button>
+    </form>
+
+    <th:block th:if="${param.categoryName != null}">
+        <h3 style="color:red;" >Kết quả tìm kiếm danh mục : "[[${param.categoryName}]]"</h3>
+    </th:block>
+    <table class="table">
+        <tr>
+            <td>id</td>
+            <td>code</td>
+            <td>name</td>
+            <td>createdDate</td>
+            <td>createdBy</td>
+            <td>modifiedDate</td>
+            <td>modifiedBy</td>
+            <td>Hành động</td>
+        </tr>
+        <tr th:each="category: ${categoryList}">
+            <td th:text="${category.id}"/>
+            <td th:text="${category.code}" />
+            <td th:text="${category.name} "/>
+            <td th:text="${category.createdDate}" />
+            <td th:text="${category.createdBy}" />
+            <td th:text="${category.modifiedDate}" />
+            <td th:text="${category.modifiedBy}" />
+            <td>
+                <a th:href="@{/category/edit?id={id}(id=${category.id})}" class="btn btn-primary">Sửa</a>
+                <a th:href="@{/category/delete?id={id}(id=${category.id})}" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Sản phẩm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <!--navbar-->
+    <div th:replace="fragments/navigation :: navbar"/>
+    <!--navbar-end-->
+
+    <h2>Chi tiết sản phẩm</h2>
+    <form method="post" th:action="@{/image/save}"  enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Hình ảnh:</label>
+            <input type="file" class="form-control" name="image"/>
+        </div>
+        <button type="submit" class="btn btn-primary"> Thêm ảnh </button>
+    </form>
+</div>
+</body>
+</html>

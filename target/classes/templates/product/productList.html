@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Sản phẩm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+
+    <!--navbar-->
+    <div th:replace="fragments/navigation :: navbar"/>
+    <!--navbar-end-->
+
+    <h2 style="color:red;" th:text="${message}"/>
+    <h2>Sản phẩm</h2>
+    <a th:href="@{/product/edit}" class="btn btn-primary">Thêm mới</a>
+    <form method="get" th:action="@{/excel}" >
+        <input type="email" name="email" placeholder="Nhập mail" required/>
+        <button type="submit" class="btn btn-primary">Thống kê product (Gửi về email)</button>
+    </form>
+    <form method="get" th:action="@{/searchProduct}">
+        <input type="text" name="productName" placeholder="Nhập tên sản phẩm" th:value="${param.productName}" required/>
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </form>
+    <th:block th:if="${param.productName}">
+        <h3 style="color:red;" >Kết quả tìm kiếm sản phẩm : "[[${param.productName}]]"</h3>
+    </th:block>
+    <table class="table">
+        <tr>
+            <td>id</td>
+            <td>Danh mục</td>
+            <td>Tên</td>
+            <td>Giá</td>
+            <td>Số lượng</td>
+            <td>Hình ảnh</td>
+            <td>Ngày tạo</td>
+            <td>Người tạo</td>
+            <td>Ngày sửa</td>
+            <td>Người sửa</td>
+            <td>Hành động</td>
+        </tr>
+        <tr th:each="product: ${productList}">
+            <td th:text="${product.id}"/>
+            <td th:text="${product.categoryName}"></td>
+            <td th:text="${product.name} "/>
+            <td th:text="${product.price}"/>
+            <td th:text="${product.quantity}"/>
+            <td>
+                <img th:src="@{'/images/'+${product.image}}" th:value="product.image" height="100px" width="200px" />
+            </td>
+            <td th:text="${product.createdDate}"/>
+            <td th:text="${product.createdBy}"/>
+            <td th:text="${product.modifiedDate}"/>
+            <td th:text="${product.modifiedBy}"/>
+            <td>
+                <a th:href="@{/product/edit?id={id}(id=${product.id})}" class="btn btn-primary">Sửa</a>
+                <a id="delete" th:href="@{/product/delete?id={id}(id=${product.id})}" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+</body>
+
+</html>
